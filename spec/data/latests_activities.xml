@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<activities type="array">
+  <activity>
+    <id type="integer">25906467</id>
+    <version type="integer">27585</version>
+    <event_type>story_update</event_type>
+    <occurred_at type="datetime">2010/03/17 21:48:15 ARST</occurred_at>
+    <author>Superman</author>
+    <project_id type="integer">32498</project_id>
+    <description>Superman finished &quot;When creating an alert, I want to define a severity&quot;</description>
+    <stories>
+      <story>
+        <id type="integer">3934566</id>
+        <url>http://www.pivotaltracker.com/services/v3/projects/43498/stories/3934566</url>
+        <current_state>finished</current_state>
+      </story>
+    </stories>
+  </activity>
+  <activity>
+    <id type="integer">25906311</id>
+    <version type="integer">27584</version>
+    <event_type>story_update</event_type>
+    <occurred_at type="datetime">2010/03/17 21:44:42 ARST</occurred_at>
+    <author>Spiderman</author>
+    <project_id type="integer">43498</project_id>
+    <description>Superman edited &quot;I want to delete alert notifications from the main alert notification page&quot;</description>
+    <stories>
+      <story>
+        <id type="integer">3935407</id>
+        <url>http://www.pivotaltracker.com/services/v3/projects/43498/stories/3935407</url>
+        <description>In the main page, in place of the &quot;Ignore&quot; column, we will have a &quot;Delete&quot; column.
+
+At the bottom, there should be a Deletar button, just like the &quot;Aplicar&quot; button (without the dropdown) in the Solicitacao management page. So, the user will be able to select many notifications and delete multiples at the same time.</description>
+      </story>
+    </stories>
+  </activity>
+</activities>
