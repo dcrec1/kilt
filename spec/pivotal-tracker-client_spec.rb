@@ -6,11 +6,11 @@ describe PivotalTrackerClient do
       Rufus::Scheduler.stub(:start_new).and_return(@scheduler = mock(Object, :every => nil))
     end
 
-    it "should save the verstion of the latest activity" do
+    it "should save the id of the latest activity" do
       client = PivotalTrackerClient.init '123456789' 
-      client.version.should == 27585
+      client.id.should == '25906467'
     end
-
+  
     it "should request the feed with the token" do
       token = '34g43g4334g43g43'
       RestClient.should_receive(:get) do |url, opts|
@@ -36,32 +36,33 @@ describe PivotalTrackerClient do
     end
   end
 
-  context "on fetch" do
+  context "on update" do
     before :each do
       @client = PivotalTrackerClient.init('fake')
       @client.stub! :system
+      @client.instance_variable_set "@id", '25906311'
     end
 
-    it "should get the feed from the current version and update the version" do
-      @client.fetch
-      @client.version.should == 28585
+    it "should get the new activities and update the id" do
+      @client.update
+      @client.id.should == '25906467'
+    end
+
+    it "should notifify about each new activity" do
+      @client.should_receive(:system).exactly(2).times
+      @client.update
     end
 
     context "on os x" do
-      it "should notifify growl about each activity" do
-        @client.should_receive(:system).exactly(2).times
-        @client.fetch
-      end
-
       it "should notify growl calling growlnotify with 'Pivotal Tracker' as the name the application, the author and the action" do
         @client.should_receive(:system).with("growlnotify -t 'Pivotal Tracker' -m 'Superman finished lorem ipsum'")
-        @client.fetch
+        @client.update
       end
 
       it "should notify newer activities at least" do
-        @client.should_receive(:system).with("growlnotify -t 'Pivotal Tracker' -m 'Spiderman edited lorem ipsum'").ordered
+        @client.should_receive(:system).with("growlnotify -t 'Pivotal Tracker' -m 'SpongeBog finished lorem ipsum'").ordered
         @client.should_receive(:system).with("growlnotify -t 'Pivotal Tracker' -m 'Superman finished lorem ipsum'").ordered
-        @client.fetch
+        @client.update
       end
     end
   end

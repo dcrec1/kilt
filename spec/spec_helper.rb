@@ -21,4 +21,3 @@ end
 require 'fakeweb'
 
 FakeWeb.register_uri(:get, "http://www.pivotaltracker.com/services/v3/activities?limit=10", :body => latests_activities)
-FakeWeb.register_uri(:get, "http://www.pivotaltracker.com/services/v3/activities?newer_than_version=27585", :body => read('newer_than_version'))
