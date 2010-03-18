@@ -2,6 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe PivotalTrackerClient do
   context "on init with a token" do
+    before :each do
+      Rufus::Scheduler.stub(:start_new).and_return(@scheduler = mock(Object, :every => nil))
+    end
+
     it "should save the verstion of the latest activity" do
       client = PivotalTrackerClient.init '123456789' 
       client.version.should == 27585
@@ -14,6 +18,19 @@ describe PivotalTrackerClient do
         latests_activities
       end
       PivotalTrackerClient.init token
+    end
+
+    it "should fetch new activities every 30 seconds" do
+      @scheduler.should_receive(:every).with('30s')
+      PivotalTrackerClient.init 'fegegege'
+    end
+
+    it "should fetch new activities" do
+      @scheduler.stub(:every) do |time, block|
+        block.call
+      end
+      PivotalTrackerClient.should_receive(:get).exactly(2).times { latests_activities }
+      PivotalTrackerClient.init 'fegegege'
     end
   end
 
@@ -35,13 +52,13 @@ describe PivotalTrackerClient do
       end
 
       it "should notify growl calling growlnotify with 'Pivotal Tracker' as the name the application, the author and the action" do
-        @client.should_receive(:system).with('growlnotify -t Pivotal Tracker -m Superman finished lorem ipsum')
+        @client.should_receive(:system).with("growlnotify -t 'Pivotal Tracker' -m 'Superman finished lorem ipsum'")
         @client.fetch
       end
 
       it "should notify newer activities at least" do
-        @client.should_receive(:system).with('growlnotify -t Pivotal Tracker -m Spiderman edited lorem ipsum').ordered
-        @client.should_receive(:system).with('growlnotify -t Pivotal Tracker -m Superman finished lorem ipsum').ordered
+        @client.should_receive(:system).with("growlnotify -t 'Pivotal Tracker' -m 'Spiderman edited lorem ipsum'").ordered
+        @client.should_receive(:system).with("growlnotify -t 'Pivotal Tracker' -m 'Superman finished lorem ipsum'").ordered
         @client.fetch
       end
     end
