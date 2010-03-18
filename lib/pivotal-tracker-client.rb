@@ -11,7 +11,10 @@ class PivotalTrackerClient
   end
 
   def fetch
-    update_by "newer_than_version=#{@version}"
+    data = update_by "newer_than_version=#{@version}"
+    data['activities'].each do |activity|
+      system ''
+    end
   end
 
   protected

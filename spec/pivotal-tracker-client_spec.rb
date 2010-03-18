@@ -18,10 +18,20 @@ describe PivotalTrackerClient do
   end
 
   context "on fetch" do
+    before :each do
+      @client = PivotalTrackerClient.init('fake')
+    end
+
     it "should get the feed from the current version and update the version" do
-      client = PivotalTrackerClient.init('fake')
-      client.fetch
-      client.version.should == 28585
+      @client.fetch
+      @client.version.should == 28585
+    end
+
+    context "on os x" do
+      it "should notifify growl about each activity" do
+        @client.should_receive(:system).exactly(2).times
+        @client.fetch
+      end
     end
   end
 end
