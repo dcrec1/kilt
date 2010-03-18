@@ -7,7 +7,7 @@ class PivotalTrackerClient
   attr_reader :version
 
   def self.init(token) 
-    new get('http://www.pivotaltracker.com/services/v3/activities?limit=10')
+    new get('http://www.pivotaltracker.com/services/v3/activities?limit=10', :headers => {'X-TrackerToken' => token})
   end
 
   protected
