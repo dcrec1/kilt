@@ -7,12 +7,25 @@ class PivotalTrackerClient
   attr_reader :version
 
   def self.init(token) 
-    new get('http://www.pivotaltracker.com/services/v3/activities?limit=10', :headers => {'X-TrackerToken' => token})
+    new token
+  end
+
+  def fetch
+    update_by "newer_than_version=#{@version}"
   end
 
   protected
 
-  def initialize(response)
-    @version = Crack::XML.parse(response)['activities'].first['version']
+  def initialize(token)
+    @token = token
+    update_by 'limit=10'
+  end
+
+  private
+
+  def update_by(qs)
+    xml = Crack::XML.parse(self.class.get("http://www.pivotaltracker.com/services/v3/activities?#{qs}", :headers => {'X-TrackerToken' => @token}))
+    @version =  xml['activities'].first['version']
+    return xml
   end
 end

@@ -16,4 +16,12 @@ describe PivotalTrackerClient do
       PivotalTrackerClient.init token
     end
   end
+
+  context "on fetch" do
+    it "should get the feed from the current version and update the version" do
+      client = PivotalTrackerClient.init('fake')
+      client.fetch
+      client.version.should == 28585
+    end
+  end
 end
