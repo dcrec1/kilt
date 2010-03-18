@@ -7,7 +7,7 @@
     <occurred_at type="datetime">2010/03/17 21:48:15 ARST</occurred_at>
     <author>Superman</author>
     <project_id type="integer">32498</project_id>
-    <description>Superman finished &quot;When creating an alert, I want to define a severity&quot;</description>
+    <description>Superman finished lorem ipsum</description>
     <stories>
       <story>
         <id type="integer">3934566</id>

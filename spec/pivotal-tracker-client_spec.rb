@@ -20,6 +20,7 @@ describe PivotalTrackerClient do
   context "on fetch" do
     before :each do
       @client = PivotalTrackerClient.init('fake')
+      @client.stub! :system
     end
 
     it "should get the feed from the current version and update the version" do
@@ -30,6 +31,11 @@ describe PivotalTrackerClient do
     context "on os x" do
       it "should notifify growl about each activity" do
         @client.should_receive(:system).exactly(2).times
+        @client.fetch
+      end
+
+      it "should notify growl calling growlnotify with 'Pivotal Tracker' as the name the application, the author and the action" do
+        @client.should_receive(:system).with('growlnotify -t Pivotal Tracker -m Superman finished lorem ipsum')
         @client.fetch
       end
     end
