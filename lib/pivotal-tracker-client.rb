@@ -12,7 +12,7 @@ class PivotalTrackerClient
 
   def fetch
     data = update_by "newer_than_version=#{@version}"
-    data['activities'].each do |activity|
+    data['activities'].reverse.each do |activity|
       system "growlnotify -t Pivotal Tracker -m #{activity['description']}"
     end
   end

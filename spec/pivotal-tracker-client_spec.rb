@@ -38,6 +38,12 @@ describe PivotalTrackerClient do
         @client.should_receive(:system).with('growlnotify -t Pivotal Tracker -m Superman finished lorem ipsum')
         @client.fetch
       end
+
+      it "should notify newer activities at least" do
+        @client.should_receive(:system).with('growlnotify -t Pivotal Tracker -m Spiderman edited lorem ipsum').ordered
+        @client.should_receive(:system).with('growlnotify -t Pivotal Tracker -m Superman finished lorem ipsum').ordered
+        @client.fetch
+      end
     end
   end
 end
