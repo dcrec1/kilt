@@ -13,9 +13,9 @@ describe PivotalTrackerClient do
 
     it "should request the feed with the token" do
       token = '34g43g4334g43g43'
-      PivotalTrackerClient.should_receive(:get) do |url, opts|
-        opts[:headers]['X-TrackerToken'].should eql(token)
-        latests_activities
+      RestClient.should_receive(:get) do |url, opts|
+        opts['X-TrackerToken'].should eql(token)
+        mock(Object, :body => latests_activities)
       end
       PivotalTrackerClient.init token
     end
@@ -29,7 +29,9 @@ describe PivotalTrackerClient do
       @scheduler.stub(:every) do |time, block|
         block.call
       end
-      PivotalTrackerClient.should_receive(:get).exactly(2).times { latests_activities }
+      RestClient.should_receive(:get).exactly(2).times do
+        mock(Object, :body => latests_activities)
+      end
       PivotalTrackerClient.init 'fegegege'
     end
   end

@@ -1,9 +1,8 @@
-require 'httparty'
+require 'rest_client'
 require 'crack/xml'
 require 'rufus/scheduler'
 
 class PivotalTrackerClient
-  include HTTParty
   include Crack
 
   attr_reader :version
@@ -30,7 +29,7 @@ class PivotalTrackerClient
   private
 
   def update_by(qs)
-    xml = XML.parse(self.class.get("http://www.pivotaltracker.com/services/v3/activities?#{qs}", :headers => {'X-TrackerToken' => @token}))
+    xml = XML.parse(RestClient.get("http://www.pivotaltracker.com/services/v3/activities?#{qs}", 'X-TrackerToken' => @token).body)
     @version = xml['activities'].first['version']
     return xml
   end
