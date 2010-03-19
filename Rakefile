@@ -10,7 +10,7 @@ begin
     gem.email = "dc.rec1@gmail.com"
     gem.homepage = "http://github.com/dcrec1/kilt"
     gem.authors = ["Diego Carrion"]
-    gem.add_development_dependency "restclient"
+    gem.add_development_dependency "rest-client"
     gem.add_development_dependency "crack"
     gem.add_development_dependency "rufus-scheduler"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
