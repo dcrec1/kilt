@@ -23,6 +23,13 @@ h2. USAGE
 
 <pre><code>kilt-app</code></pre>
 
+h2. TODO
+
+* run kilt-app in the background
+* support for Linux
+* support for Windows
+* kilt-check (see issues)
+
 h2. LICENSE
 
 Copyright (c) 2010 Diego Carrion
