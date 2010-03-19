@@ -2,12 +2,11 @@
 
 require 'rubygems'
 require 'yaml'
-require 'pivotal-tracker-client'
-
+require 'kilt'
 
 token = YAML.load_file(File.expand_path("~/.pivotal_tracker"))['token']
 
-PivotalTrackerClient.init token  
+Kilt.init token  
 
 loop do
   sleep 5

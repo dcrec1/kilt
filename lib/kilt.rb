@@ -2,7 +2,7 @@ require 'rest_client'
 require 'crack/xml'
 require 'rufus/scheduler'
 
-class PivotalTrackerClient
+class Kilt
   include Crack
 
   attr_reader :id

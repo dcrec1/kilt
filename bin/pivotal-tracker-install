@@ -1,5 +1,0 @@
-#!/usr/bin/env sh 
-
-echo token: $1 > ~/.pivotal_tracker
-
-echo Successful installed, execute pivotal-tracker-client to start.

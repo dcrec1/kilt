@@ -1,13 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe PivotalTrackerClient do
+describe Kilt do
   context "on init with a token" do
     before :each do
       Rufus::Scheduler.stub(:start_new).and_return(@scheduler = mock(Object, :every => nil))
     end
 
     it "should save the id of the latest activity" do
-      client = PivotalTrackerClient.init '123456789' 
+      client = Kilt.init '123456789' 
       client.id.should == '25906467'
     end
   
@@ -17,12 +17,12 @@ describe PivotalTrackerClient do
         opts['X-TrackerToken'].should eql(token)
         mock(Object, :body => latests_activities)
       end
-      PivotalTrackerClient.init token
+      Kilt.init token
     end
 
     it "should fetch new activities every 30 seconds" do
       @scheduler.should_receive(:every).with('30s')
-      PivotalTrackerClient.init 'fegegege'
+      Kilt.init 'fegegege'
     end
 
     it "should fetch new activities" do
@@ -32,13 +32,13 @@ describe PivotalTrackerClient do
       RestClient.should_receive(:get).exactly(2).times do
         mock(Object, :body => latests_activities)
       end
-      PivotalTrackerClient.init 'fegegege'
+      Kilt.init 'fegegege'
     end
   end
 
   context "on update" do
     before :each do
-      @client = PivotalTrackerClient.init('fake')
+      @client = Kilt.init('fake')
       @client.stub! :system
       @client.instance_variable_set "@id", '25906311'
     end
