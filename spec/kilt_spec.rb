@@ -54,6 +54,10 @@ describe Kilt do
     end
 
     context "on os x" do
+      before :each do
+        Kilt.stub!(:platform).and_return "darwin"
+      end
+      
       it "should notify growl calling growlnotify with 'Pivotal Tracker' as the name the application, the author and the action" do
         @client.should_receive(:system).with("growlnotify -t 'Pivotal Tracker' -m 'Superman finished lorem ipsum'")
         @client.update
@@ -65,5 +69,23 @@ describe Kilt do
         @client.update
       end
     end
+
+    context "on linux" do
+      before :each do
+        Kilt.stub!(:platform).and_return "linux"
+      end
+
+      it "should notify libnotify calling notify-send with 'Pivotal Tracker' as the name the application, the author and the action" do
+        @client.should_receive(:system).with("notify-send 'Pivotal Tracker' 'Superman finished lorem ipsum'")
+        @client.update
+      end
+
+      it "should notify newer activities at least" do
+        @client.should_receive(:system).with("notify-send 'Pivotal Tracker' 'SpongeBog finished lorem ipsum'").ordered
+        @client.should_receive(:system).with("notify-send 'Pivotal Tracker' 'Superman finished lorem ipsum'").ordered
+        @client.update
+      end
+    end
+
   end
 end
