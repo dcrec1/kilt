@@ -25,8 +25,6 @@ h2. USAGE
 
 h2. TODO
 
-* run kilt-app in the background
-* support for Linux
 * support for Windows
 * kilt-check (see issues)
 
