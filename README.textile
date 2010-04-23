@@ -6,6 +6,16 @@ Example: http://img684.imageshack.us/img684/4875/screenshot20100319at349.png
 
 Support for Linux is comming. If you want to help, please send me a pull request.
 
+h2. DEPENDENCIES
+
+On OS X:
+
+* Growl (http://growl.info/)
+
+On Linux:
+
+* libnotify-bin
+
 h2. INSTALLATION
 
 <pre><code>gem install kilt
