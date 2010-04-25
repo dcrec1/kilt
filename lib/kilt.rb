@@ -15,7 +15,7 @@ class Kilt
     activities = fetch_activities
     activities.reverse.each do |activity|
       if activity['id'] > @id.to_i
-        notify 'Pivotal Tracker', activity['description']
+        notify_about activity['description']
       end
     end
     update_id_from activities
@@ -39,17 +39,14 @@ class Kilt
     return XML.parse(RestClient.get("http://www.pivotaltracker.com/services/v3/activities?limit=10", 'X-TrackerToken' => @token).body)['activities']
   end
 
-  def notify(title, message)
-    case Kilt.platform
+  def notify_about(message)
+    title = 'Pivotal Tracker'
+    case RUBY_PLATFORM
     when /linux/
       system "notify-send '#{title}' '#{message}'"
     when /darwin/
       system "growlnotify -t '#{title}' -m '#{message}'"
     end
-  end
-
-  def self.platform
-    RUBY_PLATFORM
   end
 
 end

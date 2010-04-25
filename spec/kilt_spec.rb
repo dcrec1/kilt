@@ -54,8 +54,8 @@ describe Kilt do
     end
 
     context "on os x" do
-      before :each do
-        Kilt.stub!(:platform).and_return "darwin"
+      before :all do
+        silence_warnings { RUBY_PLATFORM = "darwin" }
       end
       
       it "should notify growl calling growlnotify with 'Pivotal Tracker' as the name the application, the author and the action" do
@@ -71,8 +71,8 @@ describe Kilt do
     end
 
     context "on linux" do
-      before :each do
-        Kilt.stub!(:platform).and_return "linux"
+      before :all do
+        silence_warnings { RUBY_PLATFORM = "linux" }
       end
 
       it "should notify libnotify calling notify-send with 'Pivotal Tracker' as the name the application, the author and the action" do
