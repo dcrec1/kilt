@@ -1,10 +1,10 @@
 h2. ABOUT
 
-Kilt looks for new activities in all your projects and displays them with Growl, so you are up-to-date with everything is happening.
+Kilt looks for new activities in all your projects and displays them with Growl/Libnotify, so you are up-to-date with everything is happening.
 
 Example: http://img684.imageshack.us/img684/4875/screenshot20100319at349.png
 
-Support for Linux is comming. If you want to help, please send me a pull request.
+Support for Windows is comming. If you want to help, please send me a pull request.
 
 h2. DEPENDENCIES
 
