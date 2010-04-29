@@ -41,7 +41,7 @@ class Kilt
 
   def notify_about(message)
     title = 'Pivotal Tracker'
-    icon_path = File.join File.dirname(__FILE__), '..', 'icon', 'pivotal.png'
+    icon_path = File.join File.dirname(__FILE__), '..', 'img', 'pivotal.png'
     case RUBY_PLATFORM
     when /linux/
       system "notify-send '#{title}' '#{message}'"
