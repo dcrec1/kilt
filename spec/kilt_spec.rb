@@ -79,13 +79,16 @@ describe Kilt do
       end
 
       it "should notify libnotify calling notify-send with 'Pivotal Tracker' as the name the application, the author and the action" do
-        @client.should_receive(:system).with("notify-send 'Pivotal Tracker' 'Superman finished lorem ipsum'")
+        regexp = /notify-send \'Pivotal Tracker\' \'Superman finished lorem ipsum\' --icon \S+.pivotal.png/
+        @client.should_receive(:system).with(regexp)
         @client.update
       end
 
       it "should notify newer activities at least" do
-        @client.should_receive(:system).with("notify-send 'Pivotal Tracker' 'SpongeBog finished lorem ipsum'").ordered
-        @client.should_receive(:system).with("notify-send 'Pivotal Tracker' 'Superman finished lorem ipsum'").ordered
+        regexp = /notify-send \'Pivotal Tracker\' \'SpongeBog finished lorem ipsum\' --icon \S+.pivotal.png/
+        regexp2 = /notify-send \'Pivotal Tracker\' \'Superman finished lorem ipsum\' --icon \S+.pivotal.png/
+        @client.should_receive(:system).with(regexp).ordered
+        @client.should_receive(:system).with(regexp2).ordered
         @client.update
       end
     end

@@ -7,6 +7,8 @@ class Kilt
 
   attr_reader :id
 
+  ICON = File.join(File.dirname(__FILE__), '..', 'img', 'pivotal.png')
+
   def self.init(token) 
     new token
   end
@@ -36,17 +38,18 @@ class Kilt
   end
 
   def fetch_activities
-    return XML.parse(RestClient.get("http://www.pivotaltracker.com/services/v3/activities?limit=10", 'X-TrackerToken' => @token).body)['activities']
+    return XML.parse(RestClient.get("http://www.pivotaltracker.com/services/v3/activities?limit=10",
+                                    'X-TrackerToken' => @token).body)['activities']
   end
 
   def notify_about(message)
     title = 'Pivotal Tracker'
-    icon_path = File.join File.dirname(__FILE__), '..', 'img', 'pivotal.png'
     case RUBY_PLATFORM
     when /linux/
-      system "notify-send '#{title}' '#{message}'"
+      system "notify-send '#{title}' '#{message}' --icon #{Kilt::ICON}"
     when /darwin/
-      system "growlnotify -t '#{title}' -m '#{message}' --image #{icon_path}"
+      system "growlnotify -t '#{title}' -m '#{message}' --image #{Kilt::ICON}"
     end
   end
+
 end
