@@ -59,13 +59,16 @@ describe Kilt do
       end
       
       it "should notify growl calling growlnotify with 'Pivotal Tracker' as the name the application, the author and the action" do
-        @client.should_receive(:system).with("growlnotify -t 'Pivotal Tracker' -m 'Superman finished lorem ipsum'")
+        regexp = /growlnotify -t \'Pivotal Tracker\' -m \'Superman finished lorem ipsum\' --image \S+.pivotal.png/
+        @client.should_receive(:system).with(regexp)
         @client.update
       end
 
       it "should notify newer activities at least" do
-        @client.should_receive(:system).with("growlnotify -t 'Pivotal Tracker' -m 'SpongeBog finished lorem ipsum'").ordered
-        @client.should_receive(:system).with("growlnotify -t 'Pivotal Tracker' -m 'Superman finished lorem ipsum'").ordered
+        regexp = /growlnotify -t \'Pivotal Tracker\' -m \'SpongeBog finished lorem ipsum\' --image \S+.pivotal.png/
+        regexp2 = /growlnotify -t \'Pivotal Tracker\' -m \'Superman finished lorem ipsum\' --image \S+.pivotal.png/
+        @client.should_receive(:system).with(regexp).ordered
+        @client.should_receive(:system).with(regexp2).ordered
         @client.update
       end
     end
