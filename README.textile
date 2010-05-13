@@ -6,20 +6,20 @@ Support for Windows is comming. If you want to help, please send me a pull reque
 h2. SCREENSHOTS
 
 OS X
-!http://img684.imageshack.us/img684/4875/screenshot20100319at349.png!
+!http://img13.imageshack.us/img13/2583/kiltonosx.png!
 
 Ubuntu
-!http://img413.imageshack.us/img413/505/kiltlinux.png!
+!http://img691.imageshack.us/img691/9453/kiltonubuntu.png!
 
 h2. DEPENDENCIES
 
 On OS X:
 
-* Growl (http://growl.info/)
+* "Growl":http://growl.info
 
-On Linux:
+On Ubuntu:
 
-* libnotify-bin
+* "libnotify-bin":http://packages.ubuntu.com/lucid/libnotify-bin
 
 h2. INSTALLATION
 
@@ -30,9 +30,7 @@ If you don't know your token, you can execute this:
 
 <pre><code>curl -u USERNAME:PASSWORD -X GET https://www.pivotaltracker.com/services/v3/tokens/active</code></pre>
 
-More info here and other alternative here:
-
-http://www.pivotaltracker.com/help/api?version=v3#retrieve_token
+More info and other alternative "here":http://www.pivotaltracker.com/help/api?version=v3#retrieve_token.
 
 h2. USAGE
 
