@@ -59,14 +59,14 @@ describe Kilt do
       end
       
       it "should notify growl calling growlnotify with 'Pivotal Tracker' as the name the application, the author and the action" do
-        regexp = /growlnotify -t \'Pivotal Tracker\' -m \'Superman finished lorem ipsum\' --image \S+.pivotal.png/
+        regexp = /growlnotify -t \'Pivotal Tracker\' -m \'\S+. finished lorem ipsum\' --image \S+.pivotal\.png/
         @client.should_receive(:system).with(regexp)
         @client.update
       end
 
       it "should notify newer activities at least" do
-        regexp = /growlnotify -t \'Pivotal Tracker\' -m \'SpongeBog finished lorem ipsum\' --image \S+.pivotal.png/
-        regexp2 = /growlnotify -t \'Pivotal Tracker\' -m \'Superman finished lorem ipsum\' --image \S+.pivotal.png/
+        regexp = /growlnotify -t \'Pivotal Tracker\' -m \'SpongeBog finished lorem ipsum\' --image \S+.pivotal\.png/
+        regexp2 = /growlnotify -t \'Pivotal Tracker\' -m \'Superman finished lorem ipsum\' --image \S+.pivotal\.png/
         @client.should_receive(:system).with(regexp).ordered
         @client.should_receive(:system).with(regexp2).ordered
         @client.update
@@ -79,16 +79,34 @@ describe Kilt do
       end
 
       it "should notify libnotify calling notify-send with 'Pivotal Tracker' as the name the application, the author and the action" do
-        regexp = /notify-send \'Pivotal Tracker\' \'Superman finished lorem ipsum\' --icon \S+.pivotal.png/
+        regexp = /notify-send \'Pivotal Tracker\' \'\S+. finished lorem ipsum\' --icon \S+.pivotal\.png/
         @client.should_receive(:system).with(regexp)
         @client.update
       end
 
       it "should notify newer activities at least" do
-        regexp = /notify-send \'Pivotal Tracker\' \'SpongeBog finished lorem ipsum\' --icon \S+.pivotal.png/
-        regexp2 = /notify-send \'Pivotal Tracker\' \'Superman finished lorem ipsum\' --icon \S+.pivotal.png/
+        regexp = /notify-send \'Pivotal Tracker\' \'SpongeBog finished lorem ipsum\' --icon \S+.pivotal\.png/
+        regexp2 = /notify-send \'Pivotal Tracker\' \'Superman finished lorem ipsum\' --icon \S+.pivotal\.png/
         @client.should_receive(:system).with(regexp).ordered
         @client.should_receive(:system).with(regexp2).ordered
+        @client.update
+      end
+    end
+
+    context "on windows" do
+      before :all do
+        silence_warnings { RUBY_PLATFORM = "mswin" }
+        Kilt.const_set(:Snarl, @snarl = mock)
+      end
+
+      it "should notify Snarl calling show_message with 'Pivotal Tracker' as the name the application, the author and the action" do
+        @snarl.should_receive(:show_message).with('Pivotal Tracker', /\S+ finished lorem ipsum/, /\S+.pivotal\.png/).twice
+        @client.update
+      end
+
+      it "should notify newer activities at least" do
+        @snarl.should_receive(:show_message).with('Pivotal Tracker', 'SpongeBog finished lorem ipsum', /\S+.pivotal\.png/).ordered
+        @snarl.should_receive(:show_message).with('Pivotal Tracker', 'Superman finished lorem ipsum', /\S+.pivotal\.png/).ordered
         @client.update
       end
     end

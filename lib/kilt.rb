@@ -1,13 +1,14 @@
 require 'rest_client'
 require 'crack/xml'
 require 'rufus/scheduler'
+require 'snarl' if RUBY_PLATFORM =~ /mswin|mingw|win32/
 
 class Kilt
   include Crack
 
   attr_reader :id
 
-  ICON = File.join(File.dirname(__FILE__), '..', 'img', 'pivotal.png')
+  ICON = File.expand_path(File.join(File.dirname(__FILE__), '..', 'img', 'pivotal.png'))
 
   def self.init(token) 
     new token
@@ -49,6 +50,8 @@ class Kilt
       system "notify-send '#{title}' '#{message}' --icon #{Kilt::ICON}"
     when /darwin/
       system "growlnotify -t '#{title}' -m '#{message}' --image #{Kilt::ICON}"
+    when /mswin|mingw|win32/
+      Snarl.show_message title, message, Kilt::ICON
     end
   end
 

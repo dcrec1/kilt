@@ -1,7 +1,7 @@
 h2. ABOUT
 
-Kilt looks for new activities in all your projects and displays them with Growl/Libnotify, so you are up-to-date with everything is happening.
-Support for Windows is comming. If you want to help, please send me a pull request.
+Kilt looks for new activities in all your projects and displays them with Growl/Libnotify/Snarl, so you are up-to-date with everything is happening.
+If you want to help, please send me a pull request.
 
 h2. SCREENSHOTS
 
@@ -10,6 +10,9 @@ OS X
 
 Ubuntu
 !http://img691.imageshack.us/img691/9453/kiltonubuntu.png!
+
+Windows
+!http://img192.imageshack.us/img192/9405/kiltonwindows.png!
 
 h2. DEPENDENCIES
 
@@ -20,6 +23,10 @@ On OS X:
 On Ubuntu:
 
 * "libnotify-bin":http://packages.ubuntu.com/lucid/libnotify-bin
+
+On Windows:
+* "Snarl":http://www.fullphat.net
+* "ruby-snarl":http://rubygems.org/gems/ruby-snarl
 
 h2. INSTALLATION
 
@@ -38,7 +45,6 @@ h2. USAGE
 
 h2. TODO
 
-* support for Windows
 * kilt-check (see issues)
 
 h2. LICENSE
