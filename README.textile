@@ -27,6 +27,7 @@ On Ubuntu:
 On Windows:
 * "Snarl":http://www.fullphat.net
 * "ruby-snarl":http://rubygems.org/gems/ruby-snarl
+* "win32-process":http://rubygems.org/gems/win32-process
 
 h2. INSTALLATION
 
