@@ -14,7 +14,6 @@ begin
     gem.add_dependency "crack" 
     gem.add_dependency "rufus-scheduler"
     gem.add_development_dependency "rspec"
-    gem.add_development_dependency "rcov"
     gem.add_development_dependency "fakeweb"
   end
   Jeweler::GemcutterTasks.new

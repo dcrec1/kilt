@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'yaml'
 require 'kilt'
+require 'win32/process' if RUBY_PLATFORM =~ /mswin|mingw|win32/
 
 fork do  
   token = YAML.load_file(File.expand_path("~/.pivotal_tracker"))['token']
