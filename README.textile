@@ -19,6 +19,7 @@ h2. DEPENDENCIES
 On OS X:
 
 * "Growl":http://growl.info
+* growlnotify: an extra that comes with the Growl installer 
 
 On Ubuntu:
 
