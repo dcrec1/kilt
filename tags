@@ -1,0 +1,16 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Kilt	lib/kilt.rb	/^class Kilt$/;"	c
+fetch_activities	lib/kilt.rb	/^  def fetch_activities$/;"	f	class:Kilt
+init	lib/kilt.rb	/^  def self.init(token) $/;"	F	class:Kilt
+initialize	lib/kilt.rb	/^  def initialize(token)$/;"	f	class:Kilt
+latests_activities	spec/spec_helper.rb	/^def latests_activities$/;"	f
+notify_about	lib/kilt.rb	/^  def notify_about(message)$/;"	f	class:Kilt
+read	spec/spec_helper.rb	/^def read(name)$/;"	f
+silence_warnings	spec/spec_helper.rb	/^def silence_warnings(&block)$/;"	f
+update	lib/kilt.rb	/^  def update$/;"	f	class:Kilt
+update_id_from	lib/kilt.rb	/^  def update_id_from(activities)$/;"	f	class:Kilt
