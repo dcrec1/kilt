@@ -26,19 +26,21 @@ describe Kilt do
     end
 
     it "should fetch new activities" do
-      @scheduler.stub(:every) do |time, block|
-        block.call
-      end
+      @scheduler.stub(:every) {}
       RestClient.should_receive(:get).exactly(2).times do
         mock(Object, :body => latests_activities)
       end
-      Kilt.init 'fegegege'
+
+      @client = Kilt.init 'fegegege'
+      @client.stub!(:system)
+      @client.update
     end
   end
 
   context "on update" do
     before :each do
       @client = Kilt.init('fake')
+      @client.stub!(:system)
       @client.instance_variable_set "@id", '25906311'
     end
 
@@ -48,32 +50,32 @@ describe Kilt do
     end
 
     it "should notifify about each new activity" do
-      @client.should_receive(:system).exactly(2).times
+      @client.should_receive(:notify_about).exactly(2).times {}
       @client.update
     end
 
     it "should not notify a notification who's author matches skip_author" do
       @client.instance_variable_set "@skip_author", 'Superman'
-      @client.should_receive(:system).exactly(1).times
+      @client.should_receive(:notify_about).exactly(1).times {}
       @client.update
     end
 
     context "on os x" do
       before :all do
-        silence_warnings { RUBY_PLATFORM = "darwin" }
+        silence_warnings { RUBY_PLATFORM = "darwin"; NO_FORK = "yep" }
       end
-      
+
       it "should notify growl calling growlnotify with 'Pivotal Tracker' as the name the application, the author and the action" do
-        regexp = /growlnotify -t \'Pivotal Tracker\' -m \'\S+. finished lorem ipsum\' --image \S+.pivotal\.png/
-        @client.should_receive(:system).with(regexp).twice
+        regexp = /growlnotify -t -w -s \'Pivotal Tracker\' -m \'\S+. finished lorem ipsum\' --image \S+.pivotal\.png/
+        @client.should_receive(:system).with(regexp).twice {}
         @client.update
       end
 
       it "should notify newer activities at least" do
-        regexp = /growlnotify -t \'Pivotal Tracker\' -m \'SpongeBog finished lorem ipsum\' --image \S+.pivotal\.png/
-        regexp2 = /growlnotify -t \'Pivotal Tracker\' -m \'Superman finished lorem ipsum\' --image \S+.pivotal\.png/
-        @client.should_receive(:system).with(regexp).ordered
-        @client.should_receive(:system).with(regexp2).ordered
+        regexp = /growlnotify -t -w -s \'Pivotal Tracker\' -m \'SpongeBog finished lorem ipsum\' --image \S+.pivotal\.png/
+        regexp2 = /growlnotify -t -w -s \'Pivotal Tracker\' -m \'Superman finished lorem ipsum\' --image \S+.pivotal\.png/
+        @client.should_receive(:system).with(regexp).ordered {}
+        @client.should_receive(:system).with(regexp2).ordered {}
         @client.update
       end
     end
@@ -85,15 +87,15 @@ describe Kilt do
 
       it "should notify libnotify calling notify-send with 'Pivotal Tracker' as the name the application, the author and the action" do
         regexp = /notify-send \'Pivotal Tracker\' \'\S+. finished lorem ipsum\' --icon \S+.pivotal\.png/
-        @client.should_receive(:system).with(regexp).twice
+        @client.should_receive(:system).with(regexp).twice {}
         @client.update
       end
 
       it "should notify newer activities at least" do
         regexp = /notify-send \'Pivotal Tracker\' \'SpongeBog finished lorem ipsum\' --icon \S+.pivotal\.png/
         regexp2 = /notify-send \'Pivotal Tracker\' \'Superman finished lorem ipsum\' --icon \S+.pivotal\.png/
-        @client.should_receive(:system).with(regexp).ordered
-        @client.should_receive(:system).with(regexp2).ordered
+        @client.should_receive(:system).with(regexp).ordered {}
+        @client.should_receive(:system).with(regexp2).ordered {}
         @client.update
       end
     end
