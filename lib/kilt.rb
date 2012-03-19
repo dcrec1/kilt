@@ -10,14 +10,14 @@ class Kilt
 
   ICON = File.expand_path(File.join(File.dirname(__FILE__), '..', 'img', 'pivotal.png'))
 
-  def self.init(token) 
-    new token
+  def self.init(token, skip_author=nil)
+    new(token, skip_author)
   end
 
   def update
     activities = fetch_activities
     activities.reverse.each do |activity|
-      if activity['id'] > @id.to_i
+      if activity['id'] > @id.to_i && activity['author'] != @skip_author
         notify_about activity['description']
       end
     end
@@ -26,8 +26,9 @@ class Kilt
 
   protected
 
-  def initialize(token)
+  def initialize(token, skip_author)
     @token = token
+    @skip_author = skip_author
     update_id_from fetch_activities
     Rufus::Scheduler.start_new.every('30s') { update }
   end

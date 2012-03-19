@@ -39,7 +39,6 @@ describe Kilt do
   context "on update" do
     before :each do
       @client = Kilt.init('fake')
-      @client.stub! :system
       @client.instance_variable_set "@id", '25906311'
     end
 
@@ -53,6 +52,12 @@ describe Kilt do
       @client.update
     end
 
+    it "should not notify a notification who's author matches skip_author" do
+      @client.instance_variable_set "@skip_author", 'Superman'
+      @client.should_receive(:system).exactly(1).times
+      @client.update
+    end
+
     context "on os x" do
       before :all do
         silence_warnings { RUBY_PLATFORM = "darwin" }
@@ -60,7 +65,7 @@ describe Kilt do
       
       it "should notify growl calling growlnotify with 'Pivotal Tracker' as the name the application, the author and the action" do
         regexp = /growlnotify -t \'Pivotal Tracker\' -m \'\S+. finished lorem ipsum\' --image \S+.pivotal\.png/
-        @client.should_receive(:system).with(regexp)
+        @client.should_receive(:system).with(regexp).twice
         @client.update
       end
 
@@ -80,7 +85,7 @@ describe Kilt do
 
       it "should notify libnotify calling notify-send with 'Pivotal Tracker' as the name the application, the author and the action" do
         regexp = /notify-send \'Pivotal Tracker\' \'\S+. finished lorem ipsum\' --icon \S+.pivotal\.png/
-        @client.should_receive(:system).with(regexp)
+        @client.should_receive(:system).with(regexp).twice
         @client.update
       end
 
