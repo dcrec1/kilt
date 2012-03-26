@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
 filename = File.expand_path "~/.pivotal_tracker"
-File.open(filename, 'w') { |file| file.write "token: #{ARGV.first}" }
+File.open(filename, 'w') { |file| file.write "token: #{ARGV.first}\nskip_author: #{ARGV[1]}\n" }
 puts "Successful installed, execute kilt-app to start."
